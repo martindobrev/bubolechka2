@@ -1,8 +1,8 @@
 # bubolechka2
 
-A new Flutter project.
+This is a tutorial project for flutter development
 
-## Getting Started
+## Getting Started with Flutter
 
 This project is a starting point for a Flutter application.
 
