@@ -1,9 +1,6 @@
 import 'package:bubolechka2/language_selection.dart';
 import 'package:flutter/material.dart';
 
-import 'flutter_basics/material_widgets.dart';
-//import 'flutter_basics/cupertino_widgets.dart';
-
 void main() {
   runApp(const BuboApp());
 }
@@ -40,12 +37,15 @@ class BuboHomePage extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: null,
           ),
-          const Positioned(
+          Positioned(
               right: 30,
               bottom: 30,
               width: 54,
               height: 300,
-              child: LanguageSelector()),
+              child: LanguageSelector(
+                onLanguageChange: (newLanguage) =>
+                    print('NEW LANGUAGE: $newLanguage'),
+              )),
           Positioned(
             bottom: 30,
             left: 30,

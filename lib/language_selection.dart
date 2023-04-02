@@ -3,19 +3,25 @@ import 'package:flutter/material.dart';
 
 const languages = ['BG', 'US', 'DE'];
 
+typedef LanguageChangeCallback = void Function(String newLanguage);
+
 class LanguageSelector extends StatefulWidget {
-  const LanguageSelector({super.key});
+  LanguageChangeCallback? onLanguageChange;
+
+  LanguageSelector({super.key, this.onLanguageChange});
 
   @override
-  State<LanguageSelector> createState() => _LanguageSelectorState();
+  State<LanguageSelector> createState() =>
+      _LanguageSelectorState(this.onLanguageChange);
 }
 
 class _LanguageSelectorState extends State<LanguageSelector> {
   var _selectionIsOpen = false;
   var _selectedLanguage = 'BG';
   late Widget _selectedWidget;
+  LanguageChangeCallback? onLanguageChange;
 
-  _LanguageSelectorState() {
+  _LanguageSelectorState([this.onLanguageChange]) {
     _selectedWidget = _getWidgetForLanguage('BG');
   }
 
@@ -44,8 +50,13 @@ class _LanguageSelectorState extends State<LanguageSelector> {
           onTap: () => {
                 setState(() {
                   _selectionIsOpen = !_selectionIsOpen;
-                  _selectedLanguage = language;
-                  _selectedWidget = _getWidgetForLanguage(language);
+                  if (language != _selectedLanguage) {
+                    _selectedLanguage = language;
+                    _selectedWidget = _getWidgetForLanguage(language);
+                    if (onLanguageChange != null) {
+                      onLanguageChange!(language);
+                    }
+                  }
                 }),
               },
           child: _getWidgetForLanguage(language)),
