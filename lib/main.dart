@@ -36,28 +36,22 @@ class BuboHomePage extends StatelessWidget {
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/fog.jpg'), fit: BoxFit.cover)),
+                    image: AssetImage('assets/main_background.png'),
+                    fit: BoxFit.cover)),
             child: null,
           ),
           const Positioned(
               right: 30,
               bottom: 30,
-              width: 50,
+              width: 54,
               height: 300,
               child: LanguageSelector()),
-          Center(
-            child: Container(
-              color: Colors.white,
-              child: const Padding(
-                padding: EdgeInsets.all(50.0),
-                child: Text(
-                  'WELCOME',
-                  textDirection: TextDirection.ltr,
-                  style: TextStyle(fontSize: 60),
-                ),
-              ),
-            ),
-          )
+          Positioned(
+            bottom: 30,
+            left: 30,
+            width: 200,
+            child: Image.asset('assets/bubo_logo.png'),
+          ),
         ],
       ),
     );
