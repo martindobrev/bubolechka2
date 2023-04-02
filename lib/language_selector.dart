@@ -1,11 +1,26 @@
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 
+/// Available languages
 const languages = ['BG', 'US', 'DE'];
 
+///
+/// Callback function definition that will be used to notify the parent widget
+/// about language changes
+///
 typedef LanguageChangeCallback = void Function(String newLanguage);
 
+///
+/// Language selector widget
+///
+/// Displays the current selected language with a flag (default is bulgarian).
+/// When clicking on the flag, all available options popup and can be selected.
+///
+/// The widget uses a stack layout and AnimatedPositioned for the animations.
+///
 class LanguageSelector extends StatefulWidget {
+  /// callback function to notify the parent about language changes
+  /// if set, it will be triggered when
   LanguageChangeCallback? onLanguageChange;
 
   LanguageSelector({super.key, this.onLanguageChange});
