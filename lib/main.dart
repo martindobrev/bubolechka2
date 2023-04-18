@@ -117,10 +117,47 @@ class BuboCategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Column(children: [
+      _viewWithContainer(),
+      //_viewWithStack(),
+    ]);
+  }
+
+  Widget _viewWithStack() {
+    return Stack(
       children: [
-        Text(category.translatedLabels[language]!),
+        SizedBox(width: 250, height: 250, child: Image.asset(category.image)),
+        Positioned(
+            top: 190,
+            left: 0,
+            width: 250,
+            child: Center(
+                child: Text(
+              category.translatedLabels[language] != null
+                  ? category.translatedLabels[language]!
+                  : 'Not available',
+              style: const TextStyle(color: Colors.white, fontSize: 30),
+            ))),
       ],
     );
+  }
+
+  Widget _viewWithContainer() {
+    return Container(
+        width: 250,
+        height: 250,
+        decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(category.image))),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
+          child: Center(
+            child: Text(
+              category.translatedLabels[language] != null
+                  ? category.translatedLabels[language]!
+                  : 'Not available',
+              style: const TextStyle(color: Colors.white, fontSize: 30),
+            ),
+          ),
+        ));
   }
 }

@@ -6,7 +6,7 @@ import '../models/bubo_category.dart';
 
 /// Original labels in german and bulgarian, english added as last value
 const labels = [
-  ["1", "Obst", "плодове", "vegetables"],
+  ["1", "Obst", "плодове", "vegetables", "ES"],
   ["2", "Farben", "цветове", "colors"],
   ["3", "Moebel", "мебели", "furniture"],
   ["4", "Sachen", "дрехи", "clothes"],
