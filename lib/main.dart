@@ -92,11 +92,63 @@ class BuboCategoryViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: buboCategories.map((buboCategory) {
-        return BuboCategoryListItem(language, buboCategory);
-      }).toList(),
-    );
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
+    var widthPerCategory = 300;
+    //print('Device size is: $width x $height');
+    if (width > widthPerCategory) {
+      var itemsPerRow = (width / widthPerCategory).floor();
+      var rows = (buboCategories.length / itemsPerRow).ceil();
+      //print('items per row: $itemsPerRow, rows: $rows');
+
+      return GridView.count(
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 0,
+        crossAxisCount: itemsPerRow,
+        children: buboCategories.map((buboCategory) {
+          return BuboCategoryListItem(language, buboCategory);
+        }).toList(),
+      );
+
+      // List<List<BuboCategory>> grid = [];
+
+      // for (var i = 0; i < rows; i++) {
+      //   grid.add([]);
+      // }
+
+      // // 0 1 2
+      // // x x x
+      // // x x B
+
+      // for (var i = 0; i < buboCategories.length; i++) {
+      //   grid[i % rows].add(buboCategories[i]);
+      // }
+
+      // var categoryRows = grid
+      //     .map((rowWithCategories) => Row(
+      //         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //         children: rowWithCategories
+      //             .map((category) => BuboCategoryListItem(language, category))
+      //             .toList()))
+      //     .toList();
+
+      // return ListView(
+      //   children: categoryRows,
+      // );
+    } else {
+      return ListView(
+        children: buboCategories.map((buboCategory) {
+          return BuboCategoryListItem(language, buboCategory);
+        }).toList(),
+      );
+    }
+
+    // return ListView(
+    //   children: buboCategories.map((buboCategory) {
+    //     return BuboCategoryListItem(language, buboCategory);
+    //   }).toList(),
+    // );
   }
 }
 
