@@ -111,8 +111,12 @@ class BuboCategoryViewer extends StatelessWidget {
         }).toList(),
       );
 
+      ///
+      /// Manual grid implementation
+      ///
       // List<List<BuboCategory>> grid = [];
 
+      // fill grid with empty rows
       // for (var i = 0; i < rows; i++) {
       //   grid.add([]);
       // }
@@ -121,6 +125,7 @@ class BuboCategoryViewer extends StatelessWidget {
       // // x x x
       // // x x B
 
+      // add element to the respective row
       // for (var i = 0; i < buboCategories.length; i++) {
       //   grid[i % rows].add(buboCategories[i]);
       // }
