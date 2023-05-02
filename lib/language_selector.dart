@@ -23,20 +23,21 @@ class LanguageSelector extends StatefulWidget {
   /// if set, it will be triggered when
   LanguageChangeCallback? onLanguageChange;
 
-  LanguageSelector({super.key, this.onLanguageChange});
+  /// open widget horizontally
+  bool isHorizontal;
+
+  LanguageSelector(this.isHorizontal, {super.key, this.onLanguageChange});
 
   @override
-  State<LanguageSelector> createState() =>
-      _LanguageSelectorState(this.onLanguageChange);
+  State<LanguageSelector> createState() => _LanguageSelectorState();
 }
 
 class _LanguageSelectorState extends State<LanguageSelector> {
   var _selectionIsOpen = false;
   var _selectedLanguage = 'BG';
   late Widget _selectedWidget;
-  LanguageChangeCallback? onLanguageChange;
 
-  _LanguageSelectorState([this.onLanguageChange]) {
+  _LanguageSelectorState() {
     _selectedWidget = _getWidgetForLanguage('BG');
   }
 
@@ -44,7 +45,8 @@ class _LanguageSelectorState extends State<LanguageSelector> {
   Widget build(BuildContext context) {
     List<Widget> selectionWidgets = [];
     for (int i = 0; i < languages.length; i++) {
-      selectionWidgets.add(__getAnimatedWidgetForLanguage(languages[i], i + 1));
+      selectionWidgets.add(__getAnimatedWidgetForLanguage(
+          widget.isHorizontal, languages[i], i + 1));
     }
 
     return Stack(
@@ -55,11 +57,22 @@ class _LanguageSelectorState extends State<LanguageSelector> {
     );
   }
 
-  Widget __getAnimatedWidgetForLanguage(String language, int position) {
+  Widget __getAnimatedWidgetForLanguage(
+      bool isHorizontal, String language, int position) {
+    double xPosition = 0;
+    double yPosition = 0;
+
+    if (isHorizontal) {
+      xPosition = _selectionIsOpen ? position * 60 : 0;
+    } else {
+      yPosition = _selectionIsOpen ? position * 60 : 0;
+    }
+
+    //print('xPosition: $xPosition, yPosition: $yPosition');
     return AnimatedPositioned(
-      bottom: _selectionIsOpen ? position * 60 : 0,
+      bottom: yPosition,
       curve: Curves.easeInBack,
-      left: 0,
+      right: xPosition,
       duration: const Duration(milliseconds: 300),
       child: GestureDetector(
           onTap: () => {
@@ -68,8 +81,8 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                   if (language != _selectedLanguage) {
                     _selectedLanguage = language;
                     _selectedWidget = _getWidgetForLanguage(language);
-                    if (onLanguageChange != null) {
-                      onLanguageChange!(language);
+                    if (widget.onLanguageChange != null) {
+                      widget.onLanguageChange!(language);
                     }
                   }
                 }),
@@ -89,7 +102,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
 
   Widget _getControlWidget() {
     return Positioned(
-      left: 0,
+      right: 0,
       bottom: 0,
       width: 54,
       height: 54,

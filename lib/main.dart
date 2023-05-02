@@ -40,6 +40,9 @@ class _BuboHomePageState extends State<BuboHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -61,9 +64,10 @@ class _BuboHomePageState extends State<BuboHomePage> {
           Positioned(
               right: 30,
               bottom: 30,
-              width: 54,
-              height: 300,
-              child: LanguageSelector(onLanguageChange: (newLanguage) {
+              width: width > height ? 300 : 54,
+              height: width < height ? 300 : 54,
+              child: LanguageSelector(width > height,
+                  onLanguageChange: (newLanguage) {
                 setState(() {
                   _language = newLanguage.toLowerCase();
                 });
