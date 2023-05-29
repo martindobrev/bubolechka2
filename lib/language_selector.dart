@@ -2,7 +2,11 @@ import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 
 /// Available languages
-const languages = ['BG', 'US', 'DE', 'ES'];
+const languages = [
+  'BG',
+  'US',
+  'DE',
+];
 
 ///
 /// Callback function definition that will be used to notify the parent widget
@@ -67,8 +71,6 @@ class _LanguageSelectorState extends State<LanguageSelector> {
     } else {
       yPosition = _selectionIsOpen ? position * 60 : 0;
     }
-
-    //print('xPosition: $xPosition, yPosition: $yPosition');
     return AnimatedPositioned(
       bottom: yPosition,
       curve: Curves.easeInBack,

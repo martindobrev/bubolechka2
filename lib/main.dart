@@ -50,8 +50,8 @@ class _BuboHomePageState extends State<BuboHomePage> {
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/main_background.png'),
-                    fit: BoxFit.cover)),
+                    image: AssetImage('assets/background.png'),
+                    fit: BoxFit.fill)),
             child: null,
           ),
           Positioned(
@@ -73,10 +73,10 @@ class _BuboHomePageState extends State<BuboHomePage> {
                 });
               })),
           Positioned(
-            bottom: 30,
+            bottom: 1,
             left: 30,
             width: 200,
-            child: Image.asset('assets/bubo_logo.png'),
+            child: Image.asset('assets/logo.png'),
           ),
         ],
       ),
@@ -100,11 +100,10 @@ class BuboCategoryViewer extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
 
     var widthPerCategory = 300;
-    //print('Device size is: $width x $height');
+
     if (width > widthPerCategory) {
       var itemsPerRow = (width / widthPerCategory).floor();
       var rows = (buboCategories.length / itemsPerRow).ceil();
-      //print('items per row: $itemsPerRow, rows: $rows');
 
       return GridView.count(
         mainAxisSpacing: 10,
@@ -114,37 +113,6 @@ class BuboCategoryViewer extends StatelessWidget {
           return BuboCategoryListItem(language, buboCategory);
         }).toList(),
       );
-
-      ///
-      /// Manual grid implementation
-      ///
-      // List<List<BuboCategory>> grid = [];
-
-      // fill grid with empty rows
-      // for (var i = 0; i < rows; i++) {
-      //   grid.add([]);
-      // }
-
-      // // 0 1 2
-      // // x x x
-      // // x x B
-
-      // add element to the respective row
-      // for (var i = 0; i < buboCategories.length; i++) {
-      //   grid[i % rows].add(buboCategories[i]);
-      // }
-
-      // var categoryRows = grid
-      //     .map((rowWithCategories) => Row(
-      //         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //         children: rowWithCategories
-      //             .map((category) => BuboCategoryListItem(language, category))
-      //             .toList()))
-      //     .toList();
-
-      // return ListView(
-      //   children: categoryRows,
-      // );
     } else {
       return ListView(
         children: buboCategories.map((buboCategory) {
@@ -152,12 +120,6 @@ class BuboCategoryViewer extends StatelessWidget {
         }).toList(),
       );
     }
-
-    // return ListView(
-    //   children: buboCategories.map((buboCategory) {
-    //     return BuboCategoryListItem(language, buboCategory);
-    //   }).toList(),
-    // );
   }
 }
 
@@ -178,66 +140,23 @@ class BuboCategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(category.image, width: 250, fit: BoxFit.fill),
-          RotatedBox(
-            quarterTurns: 1,
-            child: Text(
-              category.translatedLabels[language]!,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.white),
-            ),
-          )
-        ],
-      ),
-      Container(
-        height: 10,
-      )
-      //_viewWithContainer(),
-      //_viewWithStack(),
-    ]);
-  }
-
-  Widget _viewWithStack() {
-    return Stack(
+    return Column(
       children: [
-        SizedBox(width: 250, height: 250, child: Image.asset(category.image)),
-        Positioned(
-            top: 190,
-            left: 0,
-            width: 250,
-            child: Center(
-                child: Text(
-              category.translatedLabels[language] != null
-                  ? category.translatedLabels[language]!
-                  : 'Not available',
-              style: const TextStyle(color: Colors.white, fontSize: 30),
-            ))),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(category.image, width: 250, fit: BoxFit.fill),
+            Text(category.translatedLabels[language]!,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.white))
+          ],
+        ),
+        Container(
+          height: 10,
+        )
       ],
     );
-  }
-
-  Widget _viewWithContainer() {
-    return Container(
-        width: 250,
-        height: 250,
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(category.image))),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
-          child: Center(
-            child: Text(
-              category.translatedLabels[language] != null
-                  ? category.translatedLabels[language]!
-                  : 'Not available',
-              style: const TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ),
-        ));
   }
 }
