@@ -3,6 +3,8 @@ import 'package:bubolechka2/language_selector.dart';
 import 'package:bubolechka2/models/bubo_category.dart';
 import 'package:flutter/material.dart';
 
+import 'bubo_card_viewer.dart';
+
 void main() {
   runApp(const BuboApp());
 }
@@ -178,29 +180,38 @@ class BuboCategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(category.image, width: 250, fit: BoxFit.fill),
-          RotatedBox(
-            quarterTurns: 1,
-            child: Text(
-              category.translatedLabels[language]!,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.white),
-            ),
-          )
-        ],
-      ),
-      Container(
-        height: 10,
-      )
-      //_viewWithContainer(),
-      //_viewWithStack(),
-    ]);
+    return GestureDetector(
+      onTap: () => {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BuboCardViewer(category.cards),
+          ),
+        )
+      },
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(category.image, width: 250, fit: BoxFit.fill),
+            RotatedBox(
+              quarterTurns: 1,
+              child: Text(
+                category.translatedLabels[language]!,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.white),
+              ),
+            )
+          ],
+        ),
+        Container(
+          height: 10,
+        )
+        //_viewWithContainer(),
+        //_viewWithStack(),
+      ]),
+    );
   }
 
   Widget _viewWithStack() {
