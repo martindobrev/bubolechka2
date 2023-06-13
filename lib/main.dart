@@ -184,7 +184,7 @@ class BuboCategoryListItem extends StatelessWidget {
       onTap: () => {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => BuboCardViewer(category.cards),
+            builder: (context) => BuboCardViewer(category.cards, language),
           ),
         )
       },

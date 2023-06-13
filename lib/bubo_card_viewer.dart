@@ -1,6 +1,7 @@
 import 'package:bubolechka2/models/bubo_card.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 ///
 /// Widget displaying scrollable pages for each card in a selected category
@@ -10,8 +11,13 @@ import 'package:audioplayers/audioplayers.dart';
 class BuboCardViewer extends StatelessWidget {
   final List<BuboCard> cards;
   final AudioPlayer audioPlayer = AudioPlayer();
+  final String language;
+  FlutterTts flutterTts = FlutterTts();
 
-  BuboCardViewer(this.cards, {super.key});
+  BuboCardViewer(this.cards, this.language, {super.key}) {
+    flutterTts.setLanguage(language);
+    flutterTts.setSpeechRate(0.7);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +56,12 @@ class BuboCardViewer extends StatelessWidget {
           padding: const EdgeInsets.all(100.0),
           child: GestureDetector(
             onTap: () {
-              audioPlayer
-                  .play(DeviceFileSource('assets/voice/${card.audioFile}'));
+              if (language.toLowerCase() == 'bg') {
+                audioPlayer
+                    .play(DeviceFileSource('assets/voice/${card.audioFile}'));
+              } else {
+                _speak(card.translatedLabels[language]!);
+              }
             },
             child: Center(
                 child: Image.asset(
@@ -60,5 +70,11 @@ class BuboCardViewer extends StatelessWidget {
         );
       },
     ).toList();
+  }
+
+  Future _speak(String text) async {
+    print('Speaking: $text');
+    var result = await flutterTts.speak(text);
+    print('RESULT IS: $result');
   }
 }
