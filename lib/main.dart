@@ -101,7 +101,7 @@ class BuboCategoryViewer extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    var widthPerCategory = 300;
+    var widthPerCategory = 270;
     //print('Device size is: $width x $height');
     if (width > widthPerCategory) {
       var itemsPerRow = (width / widthPerCategory).floor();
@@ -109,8 +109,9 @@ class BuboCategoryViewer extends StatelessWidget {
       //print('items per row: $itemsPerRow, rows: $rows');
 
       return GridView.count(
+        childAspectRatio: width / itemsPerRow / widthPerCategory,
         mainAxisSpacing: 10,
-        crossAxisSpacing: 0,
+        crossAxisSpacing: 10,
         crossAxisCount: itemsPerRow,
         children: buboCategories.map((buboCategory) {
           return BuboCategoryListItem(language, buboCategory);
@@ -180,37 +181,19 @@ class BuboCategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BuboCardViewer(category.cards, language),
-          ),
-        )
-      },
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(category.image, width: 250, fit: BoxFit.fill),
-            RotatedBox(
-              quarterTurns: 1,
-              child: Text(
-                category.translatedLabels[language]!,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.white),
-              ),
-            )
-          ],
-        ),
-        Container(
-          height: 10,
-        )
-        //_viewWithContainer(),
-        //_viewWithStack(),
-      ]),
+    return SizedBox(
+      width: 270,
+      height: 270,
+      child: GestureDetector(
+        onTap: () => {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BuboCardViewer(category.cards, language),
+            ),
+          )
+        },
+        child: _viewWithContainer(),
+      ),
     );
   }
 

@@ -38,6 +38,7 @@ dependencies:
   circle_flags: ^1.0.4
   audioplayers: ^4.1.0
   flutter_tts: ^3.7.0
+  page_view_dot_indicator: ^2.1.0
 
 dev_dependencies:
   flutter_test:
